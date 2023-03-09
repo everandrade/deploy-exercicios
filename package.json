@@ -1,0 +1,20 @@
+{
+  "name": "deploy-exercicios",
+  "version": "1.0.0",
+  "description": "Agora temos todas as ferramentas necessárias para criar uma aplicação full stack e disponibilizá-la na nuvem e o objetivo desse exercício é justamente praticar o fluxo completo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/everandrade/deploy-exercicios.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/everandrade/deploy-exercicios/issues"
+  },
+  "homepage": "https://github.com/everandrade/deploy-exercicios#readme"
+}
