@@ -1,10 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
-import { courses } from './database'
-import { addAbortSignal } from 'stream'
-import { TCourse } from './types'
-import { TStudent } from './types'
-import { students } from './database'
+import { db } from './database/knex'
 
 const app = express()
 
@@ -19,53 +15,44 @@ app.get('/ping', (req: Request, res: Response) => {
     res.send('Pong!')
 })
 
-app.get("/courses", (req: Request, res: Response) => {
-    res.status(200).send(courses)
-})
+app.get("/courses", async (req: Request, res: Response) => {
+    try {
+        const result = await db.raw(`
+        SELECT * FROM courses
+        `)
+        res.status(200).send({ courses: result })
+    } catch (error) {
+        console.log(error)
 
-app.get("/students", (req: Request, res: Response) => {
-    res.status(200).send(students)
-})
+        if (req.statusCode === 200) {
+            res.status(500)
+        }
 
-app.get("/courses/search", (req: Request, res: Response) => {
-    const q = req.query.q as string
-    const coursesFilter = courses.filter(
-        (course) => course.name.toLowerCase().includes(q.toLowerCase())
-    )
-    res.status(200).send(coursesFilter)
-})
-
-app.post("/courses", (req: Request, res: Response) => {
-    const id = req.body.id
-    const name = req.body.name
-    const lessons = req.body.lessons
-    const stack = req.body.stack
-
-    const newCourse: TCourse = {
-        id: id,
-        // pode ser só id, name, lesson e stack pq é igual.
-        name: name,
-        lessons: lessons,
-        stack,
+        if (error instanceof Error) {
+            res.send(error.message)
+        } else {
+            res.send("Erro inesperado")
+        }
     }
-
-    courses.push(newCourse)
-
-    res.status(201).send("Curso criado com sucesso!")
 })
 
-app.post("/student", (req: Request, res: Response) => {
-    const id = req.body.id
-    const name = req.body.name
-    const age = req.body.age
+app.get("/students", async (req: Request, res: Response) => {
+    try {
+        const result = await db.raw(`
+        SELECT * FROM students
+        `)
+        res.status(200).send({ students: result })
+    } catch (error) {
+        console.log(error)
 
-    const newStudent: TStudent = {
-        id,
-        name,
-        age
+        if (req.statusCode === 200) {
+            res.status(500)
+        }
+
+        if (error instanceof Error) {
+            res.send(error.message)
+        } else {
+            res.send("Erro inesperado")
+        }
     }
-
-    students.push(newStudent)
-
-    res.status(201).send("Aluno inserido com sucesso!")
 })

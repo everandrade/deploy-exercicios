@@ -4,7 +4,10 @@
   "description": "Agora temos todas as ferramentas necessárias para criar uma aplicação full stack e disponibilizá-la na nuvem e o objetivo desse exercício é justamente praticar o fluxo completo.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./build/index.js",
+    "build": "tsc",
+    "dev": "ts-node-dev ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,13 @@
   "bugs": {
     "url": "https://github.com/everandrade/deploy-exercicios/issues"
   },
-  "homepage": "https://github.com/everandrade/deploy-exercicios#readme"
+  "homepage": "https://github.com/everandrade/deploy-exercicios#readme",
+  "dependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "knex": "^2.4.2",
+    "sqlite3": "^5.1.4"
+  }
 }
